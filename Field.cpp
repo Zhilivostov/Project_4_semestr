@@ -9,7 +9,7 @@ Field::Field(const std::string& new_name)
 
 void Field::draw_field()
 {
-	//Colors color;
+	Colors color;
 
 	color.set_color(CL_YELLOW);
 
@@ -20,12 +20,12 @@ void Field::draw_field()
 
 	color.set_color(CL_GREEN);
 	//std::cout << "  |A|B|C|D|E|F|G|H|I|J|" << std::endl;
-	std::cout << "  |A|B|C|D|E|F|G|" << std::endl;
+	std::cout << "  |A|B|C|D|E|" << std::endl;
 	//std::cout << "-------------" << std::endl;
 	for (int i = 0; i < size; i++)
 	{
 		color.set_color(CL_GRAY);
-		if (i != 6) // was 9
+		if (i != 4) // was 9
 			std::cout << " " << i + 1 << "|";
 		else
 			//std::cout << i + 1 << "|";
@@ -37,6 +37,7 @@ void Field::draw_field()
 			{
 				color.set_color(CL_PURPLE);
 				std::cout << map[i][j];
+				//std::cout << "#";
 			}
 			else
 				std::cout << map[i][j];
@@ -48,8 +49,10 @@ void Field::draw_field()
 	}
 }
 
-void Field::add_ship(const int x, const int y, const int type, const std::string& rotation) // rotaion  может быть вниз или вправо.
+//void Field::add_ship(const int x, const int y, const int type, const std::string& rotation) // rotaion  может быть вниз или вправо.
+void Field::add_ship(const int x, const int y)
 {
+	Colors color;
 
 	if (map[x][y] != 0)
 	{
@@ -57,7 +60,9 @@ void Field::add_ship(const int x, const int y, const int type, const std::string
 		std::cout << "Can't put here!" << std::endl;
 	}
 
-	if (type == 1)
+	map[x][y] = 1;
+
+	/*if (type == 1)
 	{
 		map[x][y] = 1;
 	}
@@ -65,7 +70,32 @@ void Field::add_ship(const int x, const int y, const int type, const std::string
 	{
 		color.set_color(CL_RED);
 		std::cout << "Error of type ship!" << std::endl;
-	}
+	}*/
 	
 
+}
+
+//bool Field::check_places(const int x, const int y, const int type, const std::string& rotation)
+bool Field::check_places(const int x, const int y)
+{
+	if (map[x][y] == 0)
+		return true;
+	return false;
+}
+
+bool Field::check_attack(const int x, const int y)
+{
+	if (map[x][y] == 1)
+		return true;
+	return false;
+}
+
+void Field::kill_ship(const int x, const int y)
+{
+	map[x][y] = -2;
+}
+
+void Field::kill_void(const int x, const int y)
+{
+	map[x][y] = -1;
 }
